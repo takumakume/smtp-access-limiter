@@ -58,5 +58,10 @@ timeout = global_mutex.try_lock_loop(50000) do
     end
   rescue => e
     p "access_limiter: increment error #{e}"
+  ensure
+    global_mutex.unlock
+  end
+  if timeout
+    "access_limiter: get timeout lock, #{target}"
   end
 end
